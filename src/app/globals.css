@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #ffffff;
 }
 
 @theme inline {
@@ -14,7 +14,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #ffffff;
     --foreground: #ededed;
   }
 }
@@ -23,4 +23,137 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+@layer utilities {
+  .animate-carousel-left {
+    animation: carouselLeft 30s linear infinite;
+  }
+
+  @keyframes carouselLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.custom-card {
+  width: 100%;
+  height: auto;
+  max-width: 362px;
+  border-radius: 1.5rem;
+  border: 2px solid #E2E8F0;
+  box-shadow: 0 1px 2px -1px rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF;
+  transition: border-color 0.3s ease;
+}
+
+.custom-card:hover {
+  border-color: #000000;
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-card {
+    max-width: 80%;
+    height: auto;
+    padding: 1rem;
+  }
+}
+
+
+.custom-card2 {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+  border-radius: 1rem;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF;
+  transition: border-color 0.3s ease;
+}
+
+.custom-card2:hover {
+  border-color: #000000;
+  animation: pulse2 0.5s ease-in-out;
+}
+
+@keyframes pulse2 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-card2 {
+    max-width: 80%; /* Reduced width for mobile to ensure centering */
+    height: auto;
+    padding: 1rem;
+    margin: 0 auto; /* Explicitly center the card */
+  }
+  .grid {
+    justify-content: center; /* Center the grid items on mobile */
+  }
+}
+
+
+.custom-card3 {
+  width: 100%;
+  /* max-width: 320px; */
+  height: auto;
+  
+  border-radius: 1rem;
+  border: 1px solid #E5E7EB;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF;
+  position: relative;
+  transition: border-color 0.3s ease;
+}
+
+.custom-card3:hover {
+  border-color: #000000;
+  animation: pulse3 0.5s ease-in-out;
+}
+
+@keyframes pulse3 {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 767px) {
+  .custom-card3 {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  .grid3 {
+    justify-content: center;
+  }
 }
