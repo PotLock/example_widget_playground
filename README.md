@@ -33,13 +33,8 @@ Welcome to the **POTLOCK Playground Frontend**, an interactive environment desig
    ```bash
    yarn install
    ```
-3. Set up environment variables:
-   - Create a `.env` file in the root directory.
-   - Add your NEAR Intents API key:
-     ```
-     VITE_NEAR_INTENTS_API_KEY=your-api-key-here
-     ```
-4. Start the development server:
+
+3. Start the development server:
    ```bash
    npm run dev
    ```
@@ -96,7 +91,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## Support
 
-For issues or questions, open an issue on [GitHub](https://github.com/yourusername/potlock-playground/issues) or contact support@potlock.org.
+For issues or questions, open an issue on [GitHub](https://github.com/PotLock/cross-chain-widget-playground/issues) or contact support@potlock.org.
 
 ## Acknowledgments
 
