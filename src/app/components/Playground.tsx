@@ -190,12 +190,19 @@ export default App;`;
       };
       script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
-      script.onload = () => {
+    //   script.onload = () => {
+    //     console.log("Widget reloaded for preview");
+    //     if (typeof window.initDonationWidget === "function") {
+    //       window.initDonationWidget();
+    //     }
+    //   };
+    (script.onload = () => {
         console.log("Widget reloaded for preview");
-        if (typeof window.initDonationWidget === "function") {
-          window.initDonationWidget();
+        if (typeof (window as any).initDonationWidget === "function") {
+          (window as any).initDonationWidget();
         }
-      };
+      });
+      
     //   script.onerror = () => console.error("Failed to load widget");
       script.onerror = (e) => console.error("Failed to load widget", e);
       document.body.appendChild(script);

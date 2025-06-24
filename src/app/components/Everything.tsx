@@ -1,6 +1,6 @@
 "use client";
 
-export default function KeySection2() {
+export default function Everything() {
   return (
     <div
       id="features"

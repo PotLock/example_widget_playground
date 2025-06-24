@@ -1,7 +1,7 @@
 import Header from "./components/Header";
 import Hero from "./components/Hero";
 import KeySection from "./components/Keysection";
-import KeySection2 from "./components/KeySection2";
+import Everything from "./components/Everything";
 import Perfect from "./components/Perfect";
 import Start from "./components/Start";
 import FAQs from "./components/FAQs";
@@ -13,7 +13,7 @@ export default function Home() {
       <Header />
       <Hero />
       <KeySection />
-      <KeySection2 />
+      <Everything />
       <Perfect />
       <Start />
       <FAQs />
