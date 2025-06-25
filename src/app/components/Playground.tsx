@@ -190,12 +190,6 @@ export default App;`;
       };
       script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
-    //   script.onload = () => {
-    //     console.log("Widget reloaded for preview");
-    //     if (typeof window.initDonationWidget === "function") {
-    //       window.initDonationWidget();
-    //     }
-    //   };
     (script.onload = () => {
         console.log("Widget reloaded for preview");
         if (typeof (window as any).initDonationWidget === "function") {
@@ -203,7 +197,7 @@ export default App;`;
         }
       });
       
-    //   script.onerror = () => console.error("Failed to load widget");
+   
       script.onerror = (e) => console.error("Failed to load widget", e);
       document.body.appendChild(script);
       
@@ -263,8 +257,8 @@ export default App;`;
   };
 
   return (
-    <div className="flex flex-col min-h-screen text-black bg-gray-100 sm:flex-row">
-      {/* <div className="w-full p-4 bg-white border-b sm:w-[466px] sm:border-b-0 sm:border-r border-neutral-200 flex flex-col justify-between"> */}
+    <div className="flex flex-col min-h-screen text-black bg-white sm:flex-row">
+    
       <div className="w-full p-4 bg-white border-b sm:w-[600px] sm:border-b-0 sm:border-r border-neutral-200 flex flex-col justify-between">
         <div>
           <h2 className="text-lg font-semibold mb-3 sm:text-xl sm:mb-4">
@@ -307,7 +301,6 @@ export default App;`;
                     <div
                       onClick={() => setShowDropdown(!showDropdown)}
                       className="w-full h-12 sm:h-12 p-3 sm:p-4 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md hover:bg-gray-50 active:scale-[0.98]"
-                      //   className="w-full sm:w-[560px] h-12 sm:h-12 p-3 sm:p-4 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md hover:bg-gray-50 active:scale-[0.98]"
                     >
                       <p className="text-gray-600 text-xs sm:text-sm truncate">
                         {donationTarget}
@@ -655,7 +648,9 @@ export default App;`;
         </div>
       </div>
 
-      <div className="w-full p-4 sm:p-6 bg-white rounded-xl flex flex-col justify-between">
+      <div className="w-full p-4 sm:p-6 bg-white rounded-xl flex flex-col justify-between" >
+      {/* <div className="w-full p-4 sm:p-6 bg-white rounded-xl flex flex-col justify-between min-h-screen"> */}
+
         <div className="flex bg-[#F1F5F9] rounded-xl p-1 w-fit mx-auto my-4">
           <button
             onClick={() => setActiveTab("preview")}
@@ -856,13 +851,14 @@ export default App;`}
               id="widget-root"
               className="flex items-center justify-center w-full"
               style={{
-                marginTop: "30px",
+                marginTop: "60px",
               }}
             ></div>
           )}
         </div>
+        
 
-        <div className="flex justify-center mt-auto pt-3 sm:pt-4">
+        <div className="flex justify-center mt-auto pt-68 sm:pt-4 " >
           <p
             className="text-gray-500 text-xs sm:text-sm"
             style={{ fontSize: "0.875rem" }}
