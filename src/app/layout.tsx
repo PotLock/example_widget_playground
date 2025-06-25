@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Cross-chain Widget",
-  description: "Potluck Cross-chain Widget",
+  description: "POTLOCK Cross-chain Widget",
 };
 
 export default function RootLayout({
