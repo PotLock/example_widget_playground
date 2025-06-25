@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { RgbaColorPicker } from "react-colorful";
-
+// import { RgbaColorPicker } from "react-colorful";
+import { HexColorPicker } from "react-colorful";
 const WidgetConfig = () => {
   const [donationTarget, setDonationTarget] = useState("Select Donation Type");
   const [generalSettings, setGeneralSettings] = useState<boolean>(false);
-
   const [openIndexGeneral, setOpenIndexGeneral] = useState<boolean>(false);
   const [showDropdown, setShowDropdown] = useState(false);
   const [showDropdown2, setShowDropdown2] = useState(false);
@@ -163,7 +162,7 @@ export default App;`;
   };
 
   useEffect(() => {
-    const scriptSrc =  'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js'
+    const scriptSrc = `https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@latest/dist/widget.js`;
 
     const widgetRoot = document.getElementById("widget-root");
     if (widgetRoot) widgetRoot.innerHTML = "";
@@ -190,17 +189,15 @@ export default App;`;
       };
       script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
-    (script.onload = () => {
+      script.onload = () => {
         console.log("Widget reloaded for preview");
         if (typeof (window as any).initDonationWidget === "function") {
           (window as any).initDonationWidget();
         }
-      });
-      
-   
+      };
+
       script.onerror = (e) => console.error("Failed to load widget", e);
       document.body.appendChild(script);
-      
     }
   }, [activeTab, address, donationTarget, buttonColor, asset]);
 
@@ -233,20 +230,19 @@ export default App;`;
   }: {
     onColorChange: (color: string) => void;
   }) => {
-    const [color, setColor] = useState({ r: 38, g: 38, b: 38, a: 1 });
+    const [color, setColor] = useState(`#aabbcc`);
 
     const handleChange = (newColor: any) => {
       setColor(newColor);
-      const rgbaString = `rgba(${newColor.r}, ${newColor.g}, ${newColor.b}, ${newColor.a})`;
-      onColorChange(rgbaString);
+      // const rgbaString = `rgba(${newColor.r}, ${newColor.g}, ${newColor.b}, ${newColor.a})`;
+      onColorChange(newColor);
     };
 
     return (
       <div className="w-full sm:w-[220px]">
-        <RgbaColorPicker color={color} onChange={handleChange} />
+        <HexColorPicker color={color} onChange={handleChange} />
         <div className="mt-2 font-mono text-sm">
-          Selected:{" "}
-          <span className="font-bold">{`rgba(${color.r}, ${color.g}, ${color.b}, ${color.a})`}</span>
+          Selected: <span className="font-bold">{color}</span>
         </div>
       </div>
     );
@@ -258,7 +254,6 @@ export default App;`;
 
   return (
     <div className="flex flex-col min-h-screen text-black bg-white sm:flex-row">
-    
       <div className="w-full p-4 bg-white border-b sm:w-[600px] sm:border-b-0 sm:border-r border-neutral-200 flex flex-col justify-between">
         <div>
           <h2 className="text-lg font-semibold mb-3 sm:text-xl sm:mb-4">
@@ -281,7 +276,6 @@ export default App;`;
                   setOpenIndexSocial(false);
                   setOpenIndexTheme(false);
                 }}
-                // className="w-full mb-4 h-16 sm:h-20 p-4 sm:p-6 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md hover:bg-gray-50 active:scale-[0.98]"
                 className="w-full sm:w-[400px] mb-4 h-16 sm:h-20 p-4 sm:p-6 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md hover:bg-gray-50 active:scale-[0.98]"
               >
                 <h3 className="text-base font-medium text-gray-800 transition-colors duration-300 sm:text-lg">
@@ -648,9 +642,7 @@ export default App;`;
         </div>
       </div>
 
-      <div className="w-full p-4 sm:p-6 bg-white rounded-xl flex flex-col justify-between" >
-      {/* <div className="w-full p-4 sm:p-6 bg-white rounded-xl flex flex-col justify-between min-h-screen"> */}
-
+      <div className="w-full p-4 sm:p-6 bg-white rounded-xl flex flex-col justify-between">
         <div className="flex bg-[#F1F5F9] rounded-xl p-1 w-fit mx-auto my-4">
           <button
             onClick={() => setActiveTab("preview")}
@@ -856,19 +848,78 @@ export default App;`}
             ></div>
           )}
         </div>
-        
 
-        <div className="flex justify-center mt-auto pt-68 sm:pt-4 " >
-          <p
-            className="text-gray-500 text-xs sm:text-sm"
-            style={{ fontSize: "0.875rem" }}
-          >
-            Powered by{" "}
-            <span className="text-black font-bold text-lg sm:text-xl">
-              🫕 POTLOCK
-            </span>
-          </p>
-        </div>
+        <footer className="mt-auto pt-4 sm:pt-6 ">
+          <div className="flex flex-col items-center sm:flex-row sm:justify-between">
+            <div className="flex justify-center mb-4 sm:mb-0">
+              <p
+                className="text-gray-500 text-xs sm:text-sm"
+                style={{ fontSize: "0.875rem" }}
+              >
+                Powered by{" "}
+                <span className="text-black font-bold text-lg sm:text-xl">
+                  🫕 POTLOCK
+                </span>
+              </p>
+            </div>
+            <div className="text-center sm:text-right">
+              <div className="flex items-center gap-2">
+                <svg
+                  width="20"
+                  height="12"
+                  viewBox="0 0 20 12"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.4 10.6L2.8 6L7.4 1.4L6 0L0 6L6 12L7.4 10.6ZM12.6 10.6L17.2 6L12.6 1.4L14 0L20 6L14 12L12.6 10.6Z"
+                    fill="#292929"
+                  />
+                </svg>
+
+                <h4 className="text-sm font-semibold text-gray-800 mb-0">
+                  Github repo links
+                </h4>
+              </div>
+
+              <ul className="space-y-1">
+                <li>
+                  <a
+                    href="https://github.com/PotLock/cross-chain-widget"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#292929", fontWeight: 500 }}
+                    className="text-xs sm:text-sm underline"
+                  >
+                    Cross-Chain Widget
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/PotLock/example_widget_playground"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#292929", fontWeight: 500 }}
+                    className="text-xs sm:text-sm underline"
+                  >
+                    Widget Playground
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="https://github.com/PotLock/cross-chain-widget-landing-page"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{ color: "#292929", fontWeight: 500 }}
+                    className="text-xs sm:text-sm underline"
+                  >
+                    Landing Page
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
