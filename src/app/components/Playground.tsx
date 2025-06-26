@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-// import { RgbaColorPicker } from "react-colorful";
+import Link from "next/link";
 import { HexColorPicker } from "react-colorful";
 const WidgetConfig = () => {
   const [donationTarget, setDonationTarget] = useState("Select Donation Type");
@@ -15,6 +15,7 @@ const WidgetConfig = () => {
   const [openIndexTheme, setOpenIndexTheme] = useState<boolean>(false);
   const [theme, setTheme] = useState<boolean>(false);
   const [shareUrl, setShareUrl] = useState<string>("");
+  const [link, setlink] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [asset, setAsset] = useState<string>(
     "Select which asset you want to receive."
@@ -22,12 +23,22 @@ const WidgetConfig = () => {
   const [activeTab, setActiveTab] = useState("preview");
   const [isCopied, setIsCopied] = useState(false);
   const [isCopied2, setIsCopied2] = useState(false);
-  const [buttonColor, setButtonColor] = useState("black");
+  const [buttonColor, setButtonColor] = useState("#262626");
   const [pool, setPool] = useState<any>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const dropdownRef2 = useRef<HTMLDivElement>(null);
   const assetTriggerRef = useRef<HTMLDivElement>(null);
+
+  const [primaryColor, setPrimaryColor] = useState("#FFFF");
+  const [buttonFont, setButtonFont] = useState("Mona Sans");
+  const [showPrimaryPicker, setShowPrimaryPicker] = useState(false);
+  const [showButtonPicker, setShowButtonPicker] = useState(false);
+
+  const fonts = ["Mona Sans", "Arial", "Helvetica", "Times New Roman"]; 
+
+  const togglePrimaryPicker = () => setShowPrimaryPicker(!showPrimaryPicker);
+  const toggleButtonPicker = () => setShowButtonPicker(!showButtonPicker);
 
   const project_item = ["POTLOCK Campaigns", "Direct Account"];
 
@@ -186,6 +197,8 @@ export default App;`;
           asset !== "Select which asset you want to receive."
             ? asset
             : "your-asset-name-here",
+        textColor: primaryColor,
+        fontType: buttonFont,
       };
       script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
@@ -199,7 +212,15 @@ export default App;`;
       script.onerror = (e) => console.error("Failed to load widget", e);
       document.body.appendChild(script);
     }
-  }, [activeTab, address, donationTarget, buttonColor, asset]);
+  }, [
+    activeTab,
+    address,
+    donationTarget,
+    buttonColor,
+    asset,
+    primaryColor,
+    buttonFont,
+  ]);
 
   const fetchTokens = async () => {
     try {
@@ -230,7 +251,7 @@ export default App;`;
   }: {
     onColorChange: (color: string) => void;
   }) => {
-    const [color, setColor] = useState(`#aabbcc`);
+    const [color, setColor] = useState(`#FFFF`);
 
     const handleChange = (newColor: any) => {
       setColor(newColor);
@@ -241,15 +262,35 @@ export default App;`;
     return (
       <div className="w-full sm:w-[220px]">
         <HexColorPicker color={color} onChange={handleChange} />
-        <div className="mt-2 font-mono text-sm">
-          Selected: <span className="font-bold">{color}</span>
-        </div>
+      </div>
+    );
+  };
+
+  const ColorPicker2 = ({
+    onColorChange,
+  }: {
+    onColorChange: (color: string) => void;
+  }) => {
+    const [color, setColor] = useState(`#FFFF`);
+
+    const handleChange = (newColor: any) => {
+      setColor(newColor);
+      onColorChange(newColor);
+    };
+
+    return (
+      <div className="w-full sm:w-[220px]">
+        <HexColorPicker color={color} onChange={handleChange} />
       </div>
     );
   };
 
   const handleColorChange = (color: string) => {
     setButtonColor(color);
+  };
+
+  const handleColorChange2 = (color: string) => {
+    setPrimaryColor(color);
   };
 
   return (
@@ -442,6 +483,49 @@ export default App;`;
                       />
                     </div>
                   )}
+                  <Link
+                    href="https://staging.alpha.potlock.org/campaign/create"
+                    legacyBehavior
+                  >
+                    <a
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex w-full items-center gap-6  space-x-2 mt-8"
+                    >
+                      <div style={{ fontSize: 17, fontWeight: 550 }}>
+                        Create New Project
+                      </div>
+                      <svg
+                        className="cursor-pointer"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 32 32"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        onClick={() => {}}
+                      >
+                        <circle
+                          cx="16"
+                          cy="16"
+                          r="15.5"
+                          fill="#E5E5E5"
+                          stroke="#A3A3A3"
+                        />
+                        <path
+                          d="M16 9V23"
+                          stroke="#737373"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M9 16H23"
+                          stroke="#737373"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </a>
+                  </Link>
                 </div>
               )}
 
@@ -473,11 +557,20 @@ export default App;`;
                       Enter message
                     </h3>
                     <textarea
-                      rows={5}
+                      rows={3}
                       className="w-full rounded-lg border border-gray-300 p-3 sm:p-4 text-xs sm:text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      placeholder="Enter your message or referral note here..."
+                      placeholder="Enter your message here..."
                       onChange={(e) => setShareUrl(e.target.value)}
                     ></textarea>
+
+                    <h3 className="text-base font-medium mt-4 mb-2 sm:text-lg sm:mt-5">
+                      POTLOCK Link
+                    </h3>
+                    <input
+                      className="w-full rounded-lg border border-gray-300 p-3 sm:p-4 text-xs sm:text-base resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      placeholder="Enter your message here..."
+                      onChange={(e) => setlink(e.target.value)}
+                    ></input>
                     <button
                       onClick={() => setIsModalOpen(true)}
                       className="flex items-center justify-center gap-2 bg-black text-white px-4 py-2 sm:px-6 sm:py-3 rounded-lg text-sm sm:text-base font-medium hover:bg-gray-900 active:scale-95 transition-all duration-200 ease-in-out shadow-sm mt-3 sm:mt-4"
@@ -515,7 +608,89 @@ export default App;`;
                   {openIndexTheme ? "-" : "+"}
                 </span>
               </div>
-              {theme && <ColorPicker onColorChange={handleColorChange} />}
+              {theme && (
+                <>
+                  <div className="space-y-6 p-4">
+                    <div>
+                      <h3 className="text-base font-medium mb-2 sm:text-lg">
+                        Button Text Color
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Affects the text on the button
+                      </p>
+                      <div className="mt-1 flex items-center space-x-2">
+                        <div
+                          className="w-6 h-6 rounded p-3 sm:p-4 cursor-pointer rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md hover:bg-gray-50 active:scale-[0.98]"
+                          style={{ backgroundColor: primaryColor }}
+                          onClick={togglePrimaryPicker}
+                        />
+                        <input
+                          type="text"
+                          value={primaryColor}
+                          readOnly
+                          className="w-full h-12 sm:h-12 p-3 sm:p-4 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer "
+                          onClick={togglePrimaryPicker}
+                        />
+                      </div>
+                      {showPrimaryPicker && (
+                        <div className="mt-4">
+                          <ColorPicker2 onColorChange={handleColorChange2} />
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <h3 className="text-base font-medium mb-2 sm:text-lg">
+                        Button Color
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Affects the buttons on your form
+                      </p>
+                      <div className="mt-1 flex items-center space-x-2">
+                        <div
+                          className="w-6 h-6 rounded p-3 sm:p-4 cursor-pointer rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer transition-all duration-300 ease-in-out hover:shadow-md hover:bg-gray-50 active:scale-[0.98]"
+                          style={{ backgroundColor: buttonColor }}
+                          onClick={toggleButtonPicker}
+                        />
+                        <input
+                          type="text"
+                          value={buttonColor}
+                          readOnly
+                          className="w-full h-12 sm:h-12 p-3 sm:p-4 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer "
+                          onClick={toggleButtonPicker}
+                        />
+                      </div>
+                      {showButtonPicker && (
+                        <div className="mt-4">
+                          <ColorPicker onColorChange={handleColorChange} />
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      {/* <label className="block text-sm font-medium text-gray-500">Button Font</label> */}
+
+                      <h3 className="text-base font-medium mb-2 sm:text-lg">
+                        Button Font
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        Choose the font for your buttons
+                      </p>
+                      <select
+                        value={buttonFont}
+                        onChange={(e) => setButtonFont(e.target.value)}
+                        className="w-full h-13 sm:h-13 p-3 sm:p-4 rounded border border-[#E2E8F0] flex items-center justify-between cursor-pointer "
+                      >
+                        {fonts.map((font) => (
+                          <option key={font} value={font}>
+                            {font}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
 
             {isModalOpen && (
@@ -536,7 +711,7 @@ export default App;`;
                   <div className="space-y-3 sm:space-y-4">
                     <a
                       href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-                        shareUrl
+                        `${shareUrl} ${link}`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -554,7 +729,7 @@ export default App;`;
 
                     <a
                       href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                        shareUrl
+                        `${shareUrl} ${link}`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -572,7 +747,7 @@ export default App;`;
 
                     <a
                       href={`https://www.linkedin.com/shareArticle?url=${encodeURIComponent(
-                        shareUrl
+                        `${shareUrl} ${link}`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -590,7 +765,7 @@ export default App;`;
 
                     <a
                       href={`https://api.whatsapp.com/send?text=${encodeURIComponent(
-                        shareUrl
+                        `${shareUrl} ${link}`
                       )}`}
                       target="_blank"
                       rel="noopener noreferrer"
