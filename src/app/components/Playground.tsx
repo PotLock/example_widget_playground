@@ -88,7 +88,7 @@ const WidgetConfig = () => {
   <p>This page tests the widget integration.</p>
   <script 
     async 
-    src="https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@latest/dist/widget.js" 
+    src="https://purge.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js" 
     data-config="${encodedConfig}">
   </script>
 </body>
@@ -111,7 +111,7 @@ const WidgetConfig = () => {
 
 function App() {
   useEffect(() => {
-    const scriptSrc = 'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@latest/dist/widget.js';
+    const scriptSrc = 'https://purge.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js';
     
     // Remove existing script if any
     const existing = document.querySelector(\`script[src="\${scriptSrc}"]\`);
@@ -173,7 +173,7 @@ export default App;`;
   };
 
   useEffect(() => {
-    const scriptSrc = `https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@latest/dist/widget.js`;
+    const scriptSrc = 'https://purge.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js';
 
     const widgetRoot = document.getElementById("widget-root");
     if (widgetRoot) widgetRoot.innerHTML = "";
@@ -907,7 +907,7 @@ export default App;`;
   <p>This page tests the widget integration.</p>
   <script 
     async 
-    src="https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@latest/dist/widget.js" 
+    src='https://purge.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js'
     data-config="{encodedConfig}">
   </script>
 </body>
@@ -961,7 +961,7 @@ export default App;`;
 
 function App() {
   useEffect(() => {
-    const scriptSrc = 'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@latest/dist/widget.js';
+    const scriptSrc = 'https://purge.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js';
     
     // Remove existing script if any
     const existing = document.querySelector(\`script[src="\${scriptSrc}"]\`);
