@@ -73,7 +73,11 @@ const WidgetConfig = () => {
         asset !== "Select which asset you want to receive."
           ? asset
           : "your-asset-name-here",
+          textColor: primaryColor,
+          fontType: buttonFont,
+          textInfo: "Donate"
     };
+    
 
     const encodedConfig = btoa(JSON.stringify(config));
 
@@ -88,7 +92,7 @@ const WidgetConfig = () => {
   <p>This page tests the widget integration.</p>
   <script 
     async 
-    src='https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@main/dist/widget.js?v=${Date.now()}'
+    src='https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js?v=${Date.now()}'
     data-config="${encodedConfig}">
   </script>
 </body>
@@ -111,45 +115,55 @@ const WidgetConfig = () => {
 
 function App() {
   useEffect(() => {
-    const scriptSrc = 'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@main/dist/widget.js?v=${Date.now()}'
-    
-    // Remove existing script if any
-    const existing = document.querySelector(\`script[src="\${scriptSrc}"]\`);
-    if (existing) existing.remove();
+    const scriptSrc = 'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js?v=${Date.now()}'
 
-    const config = {
-      Address: '${address || "your-wallet-id-here"}',
-      donationTarget: '${
-        donationTarget === "Select Donation Type"
-          ? "POTLOCK Campaigns"
-          : donationTarget
-      }',
-      buttonColor: '${buttonColor}',
-      Asset: '${
-        asset !== "Select which asset you want to receive."
-          ? asset
-          : "your-asset-name-here"
-      }'
-    };
+    const widgetRoot = document.getElementById("widget-root");
+    if (widgetRoot) widgetRoot.innerHTML = "";
 
-    const script = document.createElement('script');
-    script.src = scriptSrc;
-    script.async = true;
-    script.setAttribute('data-config', btoa(JSON.stringify(config)));
+    if (activeTab === "preview") {
+      const old = document.querySelector('script[src="{scriptSrc}"]');
+      if (old) old.remove();
 
-    script.onload = () => {
-      if (typeof window.initDonationWidget === 'function') {
-        window.initDonationWidget();
-      }
-    };
+      const script = document.createElement("script");
+      script.src = scriptSrc;
+      script.async = true;
 
-    document.body.appendChild(script);
+      const params = {
+        Address: address,
+        donationTarget:
+          donationTarget === "Select Donation Type"
+            ? "POTLOCK Campaigns"
+            : donationTarget,
+        buttonColor,
+        Asset:
+          asset !== "Select which asset you want to receive."
+            ? asset
+            : "your-asset-name-here",
+        textColor: primaryColor,
+        fontType: buttonFont,
+        textInfo: "Donate"
+      };
+      script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
-    return () => {
-      const s = document.querySelector(\`script[src="\${scriptSrc}"]\`);
-      if (s) s.remove();
-    };
-  }, []);
+      script.onload = () => {
+        console.log("Widget reloaded for preview");
+        if (typeof (window as any).initDonationWidget === "function") {
+          (window as any).initDonationWidget();
+        }
+      };
+
+      script.onerror = (e) => console.error("Failed to load widget", e);
+      document.body.appendChild(script);
+    }
+  }, [
+    activeTab,
+    address,
+    donationTarget,
+    buttonColor,
+    asset,
+    primaryColor,
+    buttonFont,
+  ]);
 
   return (
     <div>
@@ -173,7 +187,7 @@ export default App;`;
   };
 
   useEffect(() => {
-    const scriptSrc = `https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@main/dist/widget.js?v=${Date.now()}`;
+    const scriptSrc = `/widget.js` //`https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js?v=${Date.now()}` 
 
     const widgetRoot = document.getElementById("widget-root");
     if (widgetRoot) widgetRoot.innerHTML = "";
@@ -199,6 +213,7 @@ export default App;`;
             : "your-asset-name-here",
         textColor: primaryColor,
         fontType: buttonFont,
+        textInfo: "Donate"
       };
       script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
@@ -292,6 +307,8 @@ export default App;`;
   const handleColorChange2 = (color: string) => {
     setPrimaryColor(color);
   };
+
+
 
   return (
     <div className="flex flex-col min-h-screen text-black bg-white sm:flex-row">
@@ -907,7 +924,7 @@ export default App;`;
   <p>This page tests the widget integration.</p>
   <script 
     async 
-    src='https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@main/dist/widget.js?v=${Date.now()}' 
+    src='https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js?v=${Date.now()}'
     data-config="{encodedConfig}">
   </script>
 </body>
@@ -961,45 +978,55 @@ export default App;`;
 
 function App() {
   useEffect(() => {
-    const scriptSrc = 'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget@main/dist/widget.js?v=${Date.now()}';
-    
-    // Remove existing script if any
-    const existing = document.querySelector(\`script[src="\${scriptSrc}"]\`);
-    if (existing) existing.remove();
+    const scriptSrc = 'https://cdn.jsdelivr.net/gh/PotLock/cross-chain-widget/dist/widget.js?v=${Date.now()}'
 
-    const config = {
-      Address: '${address || "your-wallet-id-here"}',
-      donationTarget: '${
-        donationTarget === "Select Donation Type"
-          ? "POTLOCK Campaigns"
-          : donationTarget
-      }',
-      buttonColor: '${buttonColor}',
-      Asset: '${
-        asset !== "Select which asset you want to receive."
-          ? asset
-          : "your-asset-name-here"
-      }'
-    };
+    const widgetRoot = document.getElementById("widget-root");
+    if (widgetRoot) widgetRoot.innerHTML = "";
 
-    const script = document.createElement('script');
-    script.src = scriptSrc;
-    script.async = true;
-    script.setAttribute('data-config', btoa(JSON.stringify(config)));
+    if (activeTab === "preview") {
+      const old = document.querySelector('script[src="{scriptSrc}"]');
+      if (old) old.remove();
 
-    script.onload = () => {
-      if (typeof window.initDonationWidget === 'function') {
-        window.initDonationWidget();
-      }
-    };
+      const script = document.createElement("script");
+      script.src = scriptSrc;
+      script.async = true;
 
-    document.body.appendChild(script);
+      const params = {
+        Address: address,
+        donationTarget:
+          donationTarget === "Select Donation Type"
+            ? "POTLOCK Campaigns"
+            : donationTarget,
+        buttonColor,
+        Asset:
+          asset !== "Select which asset you want to receive."
+            ? asset
+            : "your-asset-name-here",
+        textColor: primaryColor,
+        fontType: buttonFont,
+        textInfo: "Donate"
+      };
+      script.setAttribute("data-config", btoa(JSON.stringify(params)));
 
-    return () => {
-      const s = document.querySelector(\`script[src="\${scriptSrc}"]\`);
-      if (s) s.remove();
-    };
-  }, []);
+      script.onload = () => {
+        console.log("Widget reloaded for preview");
+        if (typeof (window as any).initDonationWidget === "function") {
+          (window as any).initDonationWidget();
+        }
+      };
+
+      script.onerror = (e) => console.error("Failed to load widget", e);
+      document.body.appendChild(script);
+    }
+  }, [
+    activeTab,
+    address,
+    donationTarget,
+    buttonColor,
+    asset,
+    primaryColor,
+    buttonFont,
+  ]);
 
   return (
     <div>
